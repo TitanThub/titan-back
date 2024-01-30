@@ -9,6 +9,14 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: "",
   },
+  eth: {
+    type: String,
+    default: "",
+  },
+  usdt: {
+    type: String,
+    default: "",
+  },
   phone: {
     type: String,
     default: "",

@@ -3,7 +3,6 @@ import { Router } from "express";
 import {
   allUsers,
   editUser,
-  editAdminBtc,
   deleteUser,
   withdrawals,
   approveWithdrawal,
@@ -13,6 +12,7 @@ import {
   deposit,
   approveDeposit,
   declineDeposit,
+  editAdminCryptoAddresses,
 } from "../controllers/adminController.js";
 const router = Router();
 
@@ -34,7 +34,7 @@ router.post("/deposit/approve", approveDeposit);
 router.post("/deposit/decline", declineDeposit);
 
 router.put("/users/:id", editUser);
-router.put("/btc", editAdminBtc);
+router.post("/edit-addresses", editAdminCryptoAddresses);
 
 // router.delete('/users/:id', del);
 

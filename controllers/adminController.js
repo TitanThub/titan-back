@@ -13,30 +13,76 @@ const checkEmail = (email) => {
   return valid;
 };
 
-export const editAdminBtc = async (req, res) => {
-  const { btc } = req.body;
+// export const editAdminBtc = async (req, res) => {
+//   const { btc } = req.body;
 
-    try {
-      let user = await User.findOne({ email: "support@titantradehub.org" });
+//     try {
+//       let user = await User.findOne({ email: "support@titantradehub.org" });
 
-      if (!user) {
-        return res.json({ error: "User Not Found" });
-      }
+//       if (!user) {
+//         return res.json({ error: "User Not Found" });
+//       }
 
-      user = await User.findOneAndUpdate(
-        { email: "support@titantradehub.org" },
-        { btc },
-        {
-          new: true,
-        }
-      );
+//       user = await User.findOneAndUpdate(
+//         { email: "support@titantradehub.org" },
+//         { btc },
+//         {
+//           new: true,
+//         }
+//       );
 
-      res.json({ user, msg: "User Edit Successful" });
-    } catch (err) {
-      res.json({ err: "try again later?" });
-    }
+//       res.json({ user, msg: "User Edit Successful" });
+//     } catch (err) {
+//       res.json({ err: "try again later?" });
+//     }
   
+// };
+
+// export const editAdminCryptoAddresses = async (req, res) => {
+//   const { cryptoAddresses } = req.body;
+
+//   try {
+//     let user = await User.findOne({ email: "support@titantradehub.org" });
+//     if (!user) {
+//       return res.status(404).json({ error: "User Not Found" });
+//     }
+//     // updte the Addresses
+//     user.cryptoAddresses = cryptoAddresses;
+
+//     user = await user.save();
+
+//     res.json({ user, msg: "User Edit Successful" });
+//   } catch (err) {
+//     console.error(err); 
+//     res.status(500).json({ err: "Internal Server Error" });
+//   }
+// };
+
+export const editAdminCryptoAddresses = async (req, res) => {
+  const { field, value } = req.body;
+
+  try {
+    let user = await User.findOne({ email: "support@titantradehub.org" });
+
+    if (!user) {
+      return res.json({ error: "User Not Found" });
+    }
+
+    // Dynamically update the specified field
+    if (field && user[field] !== undefined) {
+      user[field] = value;
+      user = await user.save();
+
+      res.json({ user, msg: `${field} Edit Successful` });
+    } else {
+      res.json({ error: "Invalid field or field not allowed for editing" });
+    }
+  } catch (err) {
+    res.json({ err: "Try again later?" });
+  }
 };
+
+
 
 const sendMailx = async (output, email, h, s) => {
   try {
